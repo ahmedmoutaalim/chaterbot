@@ -1,5 +1,10 @@
 from chatterbot import ChatBot
-from chatterbot.trainers import ListTrainer
+from chatterbot.trainers import ListTrainer , ChatterBotCorpusTrainer
+from flask import Flask , render_template , request
+
+
+
+app = Flask(__name__)
 
 bot = ChatBot("chatbot" , read_only=False,
  logic_adapters=[
@@ -35,12 +40,28 @@ List_trainer = ListTrainer(bot)
  
 List_trainer.train(list_to_train)
 List_trainer.train(list_to_train2)
+
+
+# trainer = ChatterBotCorpusTrainer(bot)
+# trainer.train("chatterbot.corpus.english")
+
+
+@app.route("/")
+def main():
+    return render_template("index.html")
+
  
-while True :
-      user_response = input("user: ")
-      print("Chatbot: " + str(bot.get_response(user_response)))
+# while True :
+#       user_response = input("user: ")
+#       print("Chatbot: " + str(bot.get_response(user_response)))
 
 
+@app.route("/get")
+def get_chatbot_response():
+    userText = request.args.get('userMessage')
+    return  str(bot.get_response(userText))
 
+if __name__ == "__main__" : 
 
+    app.run(debug= True)
 
