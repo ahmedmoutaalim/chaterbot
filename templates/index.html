@@ -15,7 +15,7 @@
         #chatbox{
             margin-left: auto;
             margin-right: auto;
-            width: 40%;
+            width: 80%;
             margin-top: 50px;
         }
         .botText{
@@ -23,7 +23,7 @@
             font-size: 16px;
             text-align: left;
             line-height: 25px;
-            color: blue;
+            color: green;
 
         }
         #userInput{
@@ -36,23 +36,33 @@
         }
 
         #textInput{
-            border: 3px solid #657889;
+            border: 3px solid #ffff;
+            border-bottom : 3px dotted gray;
+             width: 60%;
             font-family:  monospace;
             font-size: 16px;
-
+            padding:20px;
+            color : blue;
         }
 
         #buttonInput{
 
-            padding: 3px;
+            padding: 6px;
             font-family: monospace;
-            font-size: 14px;
+            font-size: 16px;
             font-weight: bold;
+            border :3px solid green;
+            background-color : green ;
+            color : white ; 
+            border-radius : 10px
 
         }
         h1{
             text-align: center;
 
+        }
+        .botText{
+            text-align: right;
         }
     </style>
 </head>
@@ -73,12 +83,12 @@
         function getUserResponse(){
 
            var userText =  $('#textInput').val();
-           var userHTML = "<p class='userText'><span>"+userText+"</span></p>" ;
+           var userHTML = "<p class='userText'> User: <span>"+userText+"</span></p>" ;
            $('#textInput').val("");
            $("#chatbox").append(userHTML);
            document.getElementById("userInput").scrollIntoView({block:'start',behavior:'smooth'});
            $.get("/get" , {userMessage: userText}).done(function(data){
-           var botHTML = "<p class='botText'><span>"+data+"</span></p>"
+           var botHTML = "<p class='botText'>Chatbot: <span>"+data+"</span></p>"
             $('#chatbox').append(botHTML);
            });
         
